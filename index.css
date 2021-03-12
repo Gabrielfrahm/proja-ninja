@@ -144,7 +144,6 @@ header div a {
 
 .cart {
     width: 317px;
-    /* height: 484px; */
     background-color: #FFFFFF;
     border: 1px solid #E2E2E2;
     border-radius: 10px;
@@ -155,13 +154,11 @@ header div a {
     font-size:28px;
     font-weight: bold;
     margin: 32px 19px
-    
 }
 
 .games {
     display: flex;
     margin-top: 35px;
-    
 }
 
 .games button {
@@ -178,6 +175,14 @@ header div a {
     border-radius: 5px;
     font-size: 19px;
     color: #868686;
+    
+}
+
+
+.games div p {
+    width: 230px;
+    word-wrap: break-word;
+    margin-left: 8px ;
 }
 
 .final-text {
