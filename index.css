@@ -1,0 +1,160 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #F7F7F7;
+    width: 100vw;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+header{
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #EBEBEB;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+header h1 {
+    color: #707070;
+    font-weight: bold;
+    font-size: 53px;
+    border-bottom: 4px solid #B5C401 ;
+    border-radius: 3px;
+}
+
+header a {
+    margin-left:20px ;
+    text-decoration: none;
+    color: #707070;
+    font-size: 24px;
+    margin-left: -500px;
+}
+
+
+
+header div a {
+    margin-left:20px ;
+    text-decoration: none;
+    color: #707070;
+    font-size: 24px;
+}
+
+.container {
+
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.game p {
+    font-size: 28px;
+    color: #707070;
+    font-weight: 300;
+    margin-top: 100px;
+}
+
+.game span {
+    font-size: 21px;
+    color: #868686;
+    font-weight: lighter;
+    margin-top: 33px;
+}
+
+.chose-game button {
+    margin-top: 20px;
+    border: 1px solid #01AC66;
+    width: 113px;
+    height: 34px;
+    border-radius: 100px;
+    background: #01AC66 0% 0% no-repeat padding-box;
+    color: #fff;    
+    
+}
+
+.text {
+    max-width: 648px;
+    font-size: 17px;
+    color: #868686;
+    margin-top: 28px;
+    margin-bottom: 20px;
+}
+
+.numbers {
+    width: 684px;
+}
+
+.numbers input {
+    border: none;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    background: #ADC0C4;
+    border-radius: 50%;
+    margin: 0 12px  20px 0;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.buttons {
+    display: flex;
+    margin-top: 30px;
+}
+
+.button-game {
+    width: 164px;
+    height: 52px;
+    color: #27C383;
+    font-size: 15px;
+    padding: 16px;
+    border: 1px solid #27C383;
+    background: transparent;
+    border-radius: 10px;
+    margin-right: 25px ;
+}
+
+
+.add-cart{
+    width: 209px;
+    height: 52px;
+    color: #fff;
+    font-size: 15px;
+    padding: 16px;
+    border: 1px solid #27C383;
+    background: #27C383;
+    border-radius: 10px;
+    margin-left: 59px ;
+}
+
+.cart {
+    width: 317px;
+    height: 484px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+}
+
+.cart span {
+    color: #707070;
+    font-size:28px;
+    font-weight: bold;
+    margin: 32px 19px;  
+}
+
+.games {
+    margin-top: 8px;
+}
