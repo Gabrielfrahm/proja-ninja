@@ -11,6 +11,8 @@
     <header>
         <h1>TGL</h1>
         <a href=".">Home</a>
+        <a href="."></a>
+        <a href="."></a>
         <div>
             <a href=".">Account</a>
             <a href=".">Log out ➡</a>
@@ -21,54 +23,19 @@
             <section class="game">
                 <p><strong>NEW BET</strong> FOR MEGA SENA</p>
                 <span>choose a game</span>
-                <div class="chose-game">
-                    <button>mega sena</button>
+                <div class="chose-game" data-js="chose-game">
+                    <!-- vai receber os botoes  -->
                 </div>
                 <div class="text">
-                    <strong>Fill your bet</strong> <br/>
-                    Mark as many numbers as you want up to a maximum of 50. Win by hitting 15, 16, 17, 18, 19, 20 or none of the 20 numbers drawn.
+                    <strong>Fill your bet</strong>
+                    <p data-js="desc">Mark as many numbers as you want up to a maximum of 50. Win by hitting 15, 16, 17, 18, 19, 20 or none of the 20 numbers drawn.</p>
                 </div>
-                <div class="numbers">
-                    <input readonly value="01">
-                    <input readonly value="02">
-                    <input readonly value="03">
-                    <input readonly value="04">
-                    <input readonly value="05">
-                    <input readonly value="06">
-                    <input readonly value="07">
-                    <input readonly value="08">
-                    <input readonly value="09">
-                    <input readonly value="10">
-                    <input readonly value="11">
-                    <input readonly value="12">
-                    <input readonly value="13">
-                    <input readonly value="14">
-                    <input readonly value="15">
-                    <input readonly value="16">
-                    <input readonly value="17">
-                    <input readonly value="18">
-                    <input readonly value="19">
-                    <input readonly value="20">
-                    <input readonly value="21">
-                    <input readonly value="22">
-                    <input readonly value="23">
-                    <input readonly value="24">
-                    <input readonly value="25">
-                    <input readonly value="26">
-                    <input readonly value="27">
-                    <input readonly value="28">
-                    <input readonly value="29">
-                    <input readonly value="30">
-                    <input readonly value="31">
-                    <input readonly value="32">
-                    <input readonly value="33">
-                    <input readonly value="34">
-                    <input readonly value="35">
-                    <input readonly value="36">
+                <div class="numbers" data-js="numbers">
+                   <!-- recebe os inputs -->
                 </div>
                 <div class="buttons">
-                    <button class="button-game">Complete game</button>
-                    <button class="button-game">Clear game</button>
+                    <button class="button-game" data-complete="complete">Complete game</button>
+                    <button class="button-game" data-clear="clear">Clear game</button>
                     <button class="add-cart"> 🛒 Add to cart</button>
                 </div>
             </section>
@@ -76,17 +43,25 @@
                 <p class="cart-title">CART</p>
                 <div class="games">
                     <button>🗑</button>
-                    <div>
+                    <div class="mega-sena-div">
                         <p>01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,19,20,21,22,23,24,25</p>
-                        <p class="game-name">Mega sena</p>
+                        <p class="game-name-megasena">Mega Sena</p>
                         <p class="price">R$: 2,50</p>
                     </div>
                 </div>
                 <div class="games">
                     <button>🗑</button>
-                    <div>
+                    <div class="lotofacil-div">
                         <p>01,02,03,04,05,06,07,08</p>
-                        <p class="game-name">Mega sena</p>
+                        <p class="game-name-lotofacil">Lotofácil</p>
+                        <p class="price">R$: 2,50</p>
+                    </div>
+                </div>
+                <div class="games">
+                    <button>🗑</button>
+                    <div class="lotomania-div">
+                        <p>01,02,03,04,05,06,07,08</p>
+                        <p class="game-name-lotomania">Lotomania</p>
                         <p class="price">R$: 2,50</p>
                     </div>
                 </div>
@@ -94,11 +69,12 @@
                 <button class="final-button">Save ➡</button>
             </section>
         </div>
+        <footer>
+            <span>Copyright 2020 Luby Software</span>
+         </footer>
     </div>
-    <footer>
-       <span>Copyright 2020 Luby Software</span>
-    </footer>
+  
     
 </body>
-<script src="./index.js"></script>
+<script src="./index2.js"></script>
 </html>

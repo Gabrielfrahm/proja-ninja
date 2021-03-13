@@ -3,11 +3,14 @@
     margin: 0;
     box-sizing: border-box;
 }
+button,input {
+    cursor: pointer;
+}
 
 body{
     background-color: #F7F7F7;
     width: 100vw;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: helvetica ;
 }
 
 
@@ -32,7 +35,7 @@ header a {
     text-decoration: none;
     color: #707070;
     font-size: 24px;
-    margin-left: -500px;
+    margin-left: -300px;
 }
 
 
@@ -45,14 +48,13 @@ header div a {
 }
 
 .container {
-    height: 85vh;
+    
 }
 
 .content {
     display: flex;
     align-items: center;
     justify-content: space-around;
-
 }
 
 .game {
@@ -77,14 +79,39 @@ header div a {
 }
 
 .chose-game button {
+    margin-right: 20px;
+}
+
+.chose-game .Lotofácil {
     margin-top: 20px;
-    border: 1px solid #01AC66;
+    border: 2px solid #7F3992;
     width: 113px;
     height: 34px;
     border-radius: 100px;
-    background: #01AC66 0% 0% no-repeat padding-box;
-    color: #fff;    
-    
+    background-color: transparent;
+    color: #7F3992;  
+    font-weight: bold;  
+}
+
+.chose-game .Mega-Sena {
+    margin-top: 20px;
+    border: 2px solid #01AC66;
+    width: 113px;
+    height: 34px;
+    border-radius: 100px;
+    background: transparent;
+    color: #01Ac66;   
+    font-weight: bold;  
+}
+
+.chose-game .Quina {
+    margin-top: 20px;
+    border: 2px solid #F79C31;
+    width: 113px;
+    height: 34px;
+    border-radius: 100px;
+    color: #F79C31;
+    font-weight: bold;     
 }
 
 .text {
@@ -93,6 +120,11 @@ header div a {
     color: #868686;
     margin-top: 28px;
     margin-bottom: 20px;
+}
+
+.text p {
+    font-size: 20px;
+    margin-top: 0;
 }
 
 .numbers {
@@ -115,6 +147,7 @@ header div a {
 .buttons {
     display: flex;
     margin-top: 30px;
+    
 }
 
 .button-game {
@@ -127,6 +160,7 @@ header div a {
     background: transparent;
     border-radius: 10px;
     margin-right: 25px ;
+    font-weight: bold;
 }
 
 
@@ -140,9 +174,12 @@ header div a {
     background: #27C383;
     border-radius: 10px;
     margin-left: 59px ;
+    font-weight: bold;
 }
 
 .cart {
+    margin-top: 41px;
+    position: relative;
     width: 317px;
     background-color: #FFFFFF;
     border: 1px solid #E2E2E2;
@@ -168,21 +205,60 @@ header div a {
     margin: 15px;
 }
 
-.games div {
+.games .lotofacil-div {
     display: flex;
     flex-direction: column;
-    border-left: 4px solid;
+    border-left: 4px solid #7F3992;
     border-radius: 5px;
     font-size: 19px;
     color: #868686;
-    
 }
+
+.games .mega-sena-div {
+    display: flex;
+    flex-direction: column;
+    border-left: 4px solid #01AC66;
+    border-radius: 5px;
+    font-size: 19px;
+    color: #868686;
+}
+
+.games .lotomania-div {
+    display: flex;
+    flex-direction: column;
+    border-left: 4px solid #F79C31;
+    border-radius: 5px;
+    font-size: 19px;
+    color: #868686;
+}
+
 
 
 .games div p {
     width: 230px;
     word-wrap: break-word;
     margin-left: 8px ;
+}
+
+
+.game-name-megasena {
+    color: #01AC66;
+    font-weight: bold;
+}
+
+.game-name-lotofacil {
+    color: #7F3992;
+    font-weight: bold;
+}
+
+.game-name-lotomania {
+    color: #F79C31;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 16px;
+    font-weight: inherit;
 }
 
 .final-text {
@@ -211,5 +287,7 @@ footer {
     border-top: 2px solid #EBEBEB;
     font-size: 17px;
     color: #707070;
-    height: 50px
-}
+    height: 50px;
+    margin-top: 48px;
+    width: 100%;
+} 
