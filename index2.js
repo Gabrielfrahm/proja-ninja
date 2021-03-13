@@ -61,10 +61,16 @@
         }
 
         const completeGame = () => {
-            
+            if(betType === ''){
+                return alert('Escolha um jogo!');
+            }
+        
             games.map((bet) => {
-                generateBet(bet.range, bet["max-number"]);
-                console.log(betType);
+                if(betType === bet.type){
+                    generateBet(bet.range, bet["max-number"]);
+                    console.log(betType);
+                }
+                
             });
             
         }
