@@ -21,7 +21,10 @@
     <div class="container">
         <div class="content">
             <section class="game">
-                <p><strong>NEW BET</strong> FOR MEGA SENA</p>
+                <div class="wrapper">
+                    <strong>NEW BET FOR</strong>
+                    <p data-js="name-bet"> (chose a game)</p>
+                </div>
                 <span>choose a game</span>
                 <div class="chose-game" data-js="chose-game">
                     <!-- vai receber os botoes  -->
@@ -37,36 +40,39 @@
                 <div class="buttons">
                     <button class="button-game" data-complete="complete">Complete game</button>
                     <button class="button-game" data-clear="clear">Clear game</button>
-                    <button class="add-cart"> 🛒 Add to cart</button>
+                    <button class="add-cart" data-add="add"> 🛒 Add to cart</button>
                 </div>
             </section>
             <section class="cart">
                 <p class="cart-title">CART</p>
-                <div class="games">
-                    <button>🗑</button>
-                    <div class="Mega-Sena-div">
-                        <p>01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,19,20,21,22,23,24,25</p>
-                        <p class="game-name-megasena">Mega Sena</p>
-                        <p class="price">R$: 2,50</p>
+                <div data-js="cart-div" >
+                    <!-- <div class="games">
+                        <button>🗑</button>
+                        <div class="Mega-Sena-div">
+                            <p>01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,19,20,21,22,23,24,25</p>
+                            <p class="game-name-Mega-Sena">Mega Sena</p>
+                            <p class="price">R$: 2,50</p>
+                        </div>
                     </div>
-                </div>
-                <div class="games">
-                    <button>🗑</button>
-                    <div class="Lotofácil-div">
-                        <p>01,02,03,04,05,06,07,08</p>
-                        <p class="game-name-lotofacil">Lotofácil</p>
-                        <p class="price">R$: 2,50</p>
+                    <div class="games">
+                        <button>🗑</button>
+                        <div class="Lotofácil-div">
+                            <p>01,02,03,04,05,06,07,08</p>
+                            <p class="game-name-Lotofácil">Lotofácil</p>
+                            <p class="price">R$: 2,50</p>
+                        </div>
                     </div>
+                    <div class="games">
+                        <button>🗑</button>
+                        <div class="Quina-div">
+                            <p>01,02,03,04,05,06,07,08</p>
+                            <p class="game-name-Quina">Quina</p>
+                            <p class="price">R$: 2,50</p>
+                        </div>
+                    </div> -->
                 </div>
-                <div class="games">
-                    <button>🗑</button>
-                    <div class="lotomania-div">
-                        <p>01,02,03,04,05,06,07,08</p>
-                        <p class="game-name-lotomania">Lotomania</p>
-                        <p class="price">R$: 2,50</p>
-                    </div>
-                </div>
-                <p class="final-text"><strong>Cart</strong> total: R$ 15,00</p>
+                
+                <p class="final-text"><strong>Cart</strong> total: R$ 0</p>
                 <button class="final-button">Save ➡</button>
             </section>
         </div>

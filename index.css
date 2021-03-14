@@ -63,12 +63,19 @@ header div a {
     flex-direction: column;
 }
 
+.wrapper{
+    display: flex;
+    font-size: 28px;
+    color: #707070;
+    font-weight: 300;
+    margin-top: 100px;
+}
 
 .game p {
     font-size: 28px;
     color: #707070;
     font-weight: 300;
-    margin-top: 100px;
+    margin-left: 5px ;
 }
 
 .game span {
@@ -227,7 +234,7 @@ header div a {
     color: #868686;
 }
 
-.games .lotomania-div {
+.games .Quina-div {
     display: flex;
     flex-direction: column;
     border-left: 4px solid #F79C31;
@@ -245,17 +252,17 @@ header div a {
 }
 
 
-.game-name-megasena {
+.game-name-Mega-Sena {
     color: #01AC66;
     font-weight: bold;
 }
 
-.game-name-lotofacil {
+.game-name-Lotofácil {
     color: #7F3992;
     font-weight: bold;
 }
 
-.game-name-lotomania {
+.game-name-Quina {
     color: #F79C31;
     font-weight: bold;
 }
