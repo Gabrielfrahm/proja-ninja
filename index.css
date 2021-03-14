@@ -100,6 +100,17 @@ header div a {
     font-weight: bold;  
 }
 
+.Lotofácil-toggle {
+    margin-top: 20px;
+    border: 2px solid #7F3992;
+    width: 113px;
+    height: 34px;
+    border-radius: 100px;
+    background-color: #7F3992;
+    color: #fff;  
+    font-weight: bold;  
+}
+
 .chose-game .Mega-Sena {
     margin-top: 20px;
     border: 2px solid #01AC66;
@@ -108,6 +119,17 @@ header div a {
     border-radius: 100px;
     background: transparent;
     color: #01Ac66;   
+    font-weight: bold;  
+}
+
+.Mega-Sena-toggle {
+    margin-top: 20px;
+    border: 2px solid #01AC66;
+    width: 113px;
+    height: 34px;
+    border-radius: 100px;
+    background: #01Ac66;
+    color: #fff;   
     font-weight: bold;  
 }
 
@@ -121,6 +143,17 @@ header div a {
     font-weight: bold;     
 }
 
+.Quina-toggle {
+    margin-top: 20px;
+    border: 2px solid #F79C31;
+    width: 113px;
+    height: 34px;
+    background-color: #F79C31;
+    border-radius: 100px;
+    color: #fff;
+    font-weight: bold;     
+}
+
 .text {
     max-width: 648px;
     font-size: 17px;
@@ -131,7 +164,8 @@ header div a {
 
 .text p {
     font-size: 20px;
-    margin-top: 0;
+    margin-left: 0;
+    text-align: justify;
 }
 
 .numbers {
@@ -152,7 +186,19 @@ header div a {
 }
 
 .numbers .selected {
+    background-color: #7e8c8f;
+}
+
+.numbers .selected-Lotofácil {
     background-color: #7F3992;
+}
+
+.numbers .selected-Mega-Sena {
+    background-color: #27C383;
+}
+
+.numbers .selected-Quina {
+    background-color: #F79C31;
 }
 
 .buttons {
@@ -246,9 +292,10 @@ header div a {
 
 
 .games div p {
-    width: 230px;
+    width: 240px;
     word-wrap: break-word;
     margin-left: 8px ;
+    font-size: 17px;
 }
 
 
@@ -272,10 +319,17 @@ header div a {
     font-weight: inherit;
 }
 
-.final-text {
-    margin: 19px;
+.wrapper-total {
+    display: flex;
     font-size: 28px;
+    margin: 19px;
     color: #707070;
+}
+
+.final-text {
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: 100;
 }
 
 
@@ -286,10 +340,8 @@ header div a {
     border-radius: 10px;
     color: #27C383;
     font-size: 32px;
-    font-weight: bold;
-    
+    font-weight: bold; 
 }
-
 
 footer {
     display: flex;

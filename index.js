@@ -8,11 +8,11 @@
         let betType = ''; 
         // dados do json
         let gamesJson = [];
-        
-        let ItemInCart = [];
+        // item no carrinho
+        let itemInCart = [];
         // numero das apostas
         let bets = [];
-
+        // preço no carrinho
         let priceCart = 0;
 
         const ajax = new XMLHttpRequest();
@@ -40,7 +40,7 @@
             }
         }
 
-        // gera numeros aleatorios e unicos 
+        // gera números aleatórios e únicos 
         const generateBet = (range, limit) => {
             let arr = [];
             for(let i = 1; i <= limit; i++){
@@ -70,6 +70,10 @@
 
         // escolhe o tipo de aposta
         const game = (type) => {
+            let button =  doc.querySelector(`[class="${type}-toggle"]`);
+            if(!button){
+                doc.querySelector(`[class="${type}"]`).setAttribute('class', `${type}-toggle`);
+            }
             gamesJson.map( (bet) => {
                 if (bet.type === type) {
                     doc.querySelector('[data-js="desc"]').textContent = bet.description;
@@ -94,7 +98,7 @@
             }
 
             if(doc.querySelector('[class="selected"]')){
-                clear();
+                return clear();
             } 
         }
 
@@ -157,22 +161,46 @@
             secondDiv.appendChild(pTypeGame);
             secondDiv.appendChild(pPrice);
             bets = [];
-            return mainDiv;
+            // return mainDiv;
+        }
+
+        const sum = (arr) => {
+            let sum = 0;
+            arr.map(item => {
+                if(item){
+                    return sum += item.price
+                }
+                return sum = 0;
+            })
+            return sum; 
+        }
+
+        const sub = (arr) => {
+            let sub = 0;
+            arr.map(item => {
+                if(item){
+                    return (sub += item.price)
+                }
+                return sub = 0;
+            })
+            return sub;
         }
 
         // remove os itens do carrinho
         const removeItemCart = (item) => {
             doc.querySelector('[class="games"]').remove(item.parentElement);
+            console.log('sub ' + sub(itemInCart));
+            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${(sub(itemInCart) - sum(itemInCart))}`;
+        }
+        
+        // calcula o preço no carrinho 
+        const calculateTotalCart = () => {
+            console.log('sum' + sum(itemInCart))
+            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${sum(itemInCart)}`;
             
         }
-
-        const calculateTotalCart = () => {
-            ItemInCart.map((itens) => {
-                return (priceCart += itens.price)
-            });
-            doc.querySelector('[class="final-text"]').textContent = priceCart;
-        }
-
+        
+        
         // botao de add no cart
         const addToCart = (bets) => {
             if(bets.length === 0){
@@ -181,11 +209,11 @@
             
             gamesJson.map((i) => {
                 if(i.type === betType){
-                    ItemInCart.push(i);
-                    item = cartItem(i, bets);
+                    itemInCart.push(i);
+                    return cartItem(i, bets);
                 }
             })
-            calculateTotalCart();
+             calculateTotalCart();
         }
         
         // le o json
