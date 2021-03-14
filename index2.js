@@ -4,9 +4,14 @@
 
     function app() {
 
+        // tipo da aposta
         let betType = ''; 
         const ajax = new XMLHttpRequest();
-        let games = [];
+        // dados do json
+        let gamesJson = [];
+
+        // numero das apostas
+        let bets = [];
 
         const loadJson= (endpoint) => {
             ajax.open('GET', endpoint, true);
@@ -45,13 +50,22 @@
         }
 
         const generateBet = (range, limit) => {
+            let arr = [];
             for(let i = 1; i <= limit; i++){
-                console.log(Math.floor(Math.random() * range))
+                const number = Math.ceil(Math.random() * range);
+                const check = arr.some(item => {
+                    return item === number;
+                });
+                if(check) i--;
+                arr.push(number);
             }
+            const uniqNumber = new Set(arr);
+            bets = arr;
+            return arr = [...uniqNumber];
         }
 
         const game = (type) => {
-            games.map( (bet) => {
+            gamesJson.map( (bet) => {
                 if (bet.type === type) {
                     doc.querySelector('[data-js="desc"]').textContent = bet.description;
                     getRange(bet.range); 
@@ -60,26 +74,53 @@
             });
         }
 
+        //clear game
+        const clear = () => {   
+            const inputs = doc.querySelector('input.selected');
+
+            if(!doc.querySelector('[class="selected"]')){
+                return alert('gere um jogo antes de limpar');
+            }
+
+            for(let i = 0 ; i <= bets.length; i++){
+                inputs.removeAttribute('class');
+            }
+
+            if(doc.querySelector('[class="selected"]')){
+                clear();
+            } 
+        }
+
         const completeGame = () => {
             if(betType === ''){
                 return alert('Escolha um jogo!');
             }
-        
-            games.map((bet) => {
+
+            gamesJson.map((bet) => {
                 if(betType === bet.type){
-                    generateBet(bet.range, bet["max-number"]);
-                    console.log(betType);
+                    if(doc.querySelector('[class="selected"]')){
+                        return alert('Limpe antes de gerar um novo jogo');
+                    }
+                    const arr = generateBet(bet.range, bet["max-number"]);
+                    
+                    const inputs = doc.querySelectorAll('input');
+                    
+                    for(let i = 0 ; i < arr.length; i++ ){                          
+                        inputs[arr[i] - 1].setAttribute('class','selected');
+                    }
+                    return;
                 }
-                
             });
             
         }
+
+       
         
         // le o json
         ajax.onreadystatechange = () => {
             if (ajax.readyState === 4) {
-                games = JSON.parse(ajax.response).types;
-                findButton(games);
+                gamesJson = JSON.parse(ajax.response).types;
+                findButton(gamesJson);
             }
         }
 
@@ -91,7 +132,10 @@
                 return game(element.dataset.title);
               }
               if (element.dataset.complete === 'complete' ) {
-                return completeGame(element.dataset.complete);
+                return completeGame();
+              }
+              if (element.dataset.clear === 'clear' ) {
+                return clear();
               }
             },
             false

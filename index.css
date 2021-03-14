@@ -144,6 +144,10 @@ header div a {
     font-weight: bold;
 }
 
+.numbers .selected {
+    background-color: #7F3992;
+}
+
 .buttons {
     display: flex;
     margin-top: 30px;
@@ -205,7 +209,7 @@ header div a {
     margin: 15px;
 }
 
-.games .lotofacil-div {
+.games .Lotofácil-div {
     display: flex;
     flex-direction: column;
     border-left: 4px solid #7F3992;
@@ -214,7 +218,7 @@ header div a {
     color: #868686;
 }
 
-.games .mega-sena-div {
+.games .Mega-Sena-div {
     display: flex;
     flex-direction: column;
     border-left: 4px solid #01AC66;
