@@ -1,7 +1,5 @@
 (function(win, doc)  {
 
-    
-
     function app() {
 
         // tipo da aposta
@@ -12,8 +10,8 @@
         let itemInCart = [];
         // numero das apostas
         let bets = [];
-        // preço no carrinho
-        let priceCart = 0;
+
+        
 
         const ajax = new XMLHttpRequest();
         
@@ -29,7 +27,7 @@
             }
         }
 
-        //pega o range de cada jogo
+        // pega o range de cada jogo
         const getRange = (range) => { 
             remove(doc.querySelector('[data-js="numbers"]'));
             for (let i = 1; i <= range; i++) {
@@ -53,15 +51,14 @@
                 arr.push(number);
             }
             const uniqNumber = new Set(arr);
-            console.log(uniqNumber)
             
-            arr =[...uniqNumber] ;
+            arr = [...uniqNumber];
             return bets = [...uniqNumber];
         }
 
         // procura os botoes
         const findButton = (data) => {
-            data.map((item, index) => {
+            data.filter((item, index) => {
                 const title = doc.createElement('button');
                 const titleText = doc.createTextNode(item.type);
                 title.setAttribute('class', `${item.type}`);
@@ -77,22 +74,22 @@
                 buttons.removeAttribute('class');
                 buttons.classList.toggle(`${bet.type}-toggle`);
                 return
-            }
-            
+            }  
         }
 
         // escolhe o tipo de aposta
         const game = (type) => {
             bets= [];
-            gamesJson.map( (bet) => {
+            gamesJson.filter( (bet) => {
                 if (bet.type === type) {
                     toggle(bet);
                     doc.querySelector('[data-js="desc"]').textContent = bet.description;
                     doc.querySelector('[data-js="name-bet"]').textContent = ` ${type}`;
                     getRange(bet.range);
+                    betType = type;
                 }
-                betType = type;
             });
+            
         }
 
         //clear game
@@ -115,18 +112,17 @@
 
         // faz a aposta
         const completeGame = () => {
-            bets = [];
+            // bets = [];
             if(betType === ''){
                 return alert('Escolha um jogo!');
             }
 
-            gamesJson.map((bet) => {
+            gamesJson.filter((bet) => {
                 if(betType === bet.type){
                     if(doc.querySelector(`[class="selected-${bet.type}"]`)){
                         return alert('Limpe antes de gerar um novo jogo');
                     }
                     const arr = generateBet(bet.range, bet["max-number"]);
-                    console.log(arr);
                     const inputs = doc.querySelectorAll('input');
                     
                     for(let i = 0 ; i < arr.length; i++ ){                          
@@ -138,8 +134,17 @@
             
         }
 
+        const removeFeedBack =  () => {
+            const pVoid = doc.querySelector(`[data-js="void"]`);
+            if(pVoid){
+                return doc.querySelector('[data-js="cart-div"]').removeChild(pVoid);
+            }
+            return;
+        }
+
         // cria o html dentro do carrinho
         const cartItem = (game, bet) => {
+            removeFeedBack()
             const mainDiv = doc.createElement('div');
             mainDiv.setAttribute('class', 'games');
 
@@ -187,30 +192,16 @@
             return sum; 
         }
 
-        const sub = (arr) => {
-            let sub = 0;
-            arr.map(item => {
-                if(item){
-                    return (sub = item.price)
-                }
-                return sub = 0;
-            })
-            return sub;
-        }
-
         // remove os itens do carrinho
         const removeItemCart = (item) => {
             doc.querySelector('[class="games"]').remove(item.parentElement);
-            console.log('sub ' + sub(itemInCart));
-            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${(sub(itemInCart) - sum(itemInCart))}`;
+            itemInCart.splice(item,1);
+            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${sum(itemInCart)}`;
         }
         
         // calcula o preço no carrinho 
         const calculateTotalCart = () => {
-            console.log('sum' + sum(itemInCart))
             doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${sum(itemInCart)}`;
-            console.log(itemInCart);
-            
         }
         
         // botao de add no cart
@@ -219,7 +210,7 @@
                 return alert('Faça um Novo jogo para adicionar no carrinho');
             }
 
-            
+            clear();
             
             gamesJson.map((i) => {
                 if(i.type === betType){
@@ -230,7 +221,7 @@
                     return cartItem(i, bets);
                 }
             })
-             calculateTotalCart();
+            calculateTotalCart();
         }
 
         const userSelected = (value) => {
@@ -238,7 +229,7 @@
                 return alert('Escolha um jogo!');
             }
 
-            gamesJson.map((bet) => {
+            gamesJson.filter((bet) => {
                 if(betType === bet.type){
 
                     const input = doc.querySelector(`[data-input="${value}"]`);
@@ -257,7 +248,6 @@
                     }
                     bets.push(input.value); 
                     input.setAttribute('class', `selected-${betType}`);    
-                    
                 }
             });
         }
@@ -267,6 +257,7 @@
             if (ajax.readyState === 4) {
                 gamesJson = JSON.parse(ajax.response).types;
                 findButton(gamesJson);
+                game('Lotofácil')
             }
         }
 
@@ -287,10 +278,10 @@
                 return clear();
               }
               if(event.dataset.add === 'add'){
-                  return addToCart(bets);
+                return addToCart(bets);
               }
               if(event.dataset.delete === 'delete'){
-                  return removeItemCart(event);
+                return removeItemCart(event.dataset.delete);
               }
             },
             false

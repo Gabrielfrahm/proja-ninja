@@ -7,6 +7,10 @@ button,input {
     cursor: pointer;
 }
 
+button:focus , input:focus {
+    outline: none;
+}
+
 body{
     background-color: #F7F7F7;
     width: 100vw;
@@ -140,7 +144,9 @@ header div a {
     height: 34px;
     border-radius: 100px;
     color: #F79C31;
-    font-weight: bold;     
+    font-weight: bold;  
+    background: transparent;
+
 }
 
 .Quina-toggle {
