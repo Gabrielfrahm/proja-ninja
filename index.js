@@ -11,8 +11,6 @@
         // numero das apostas
         let bets = [];
 
-        
-
         const ajax = new XMLHttpRequest();
         
         const loadJson= (endpoint) => {
@@ -55,16 +53,31 @@
             arr = [...uniqNumber];
             return bets = [...uniqNumber];
         }
+        
+    
 
         // procura os botoes
         const findButton = (data) => {
             data.filter((item, index) => {
                 const title = doc.createElement('button');
                 const titleText = doc.createTextNode(item.type);
+                
                 title.setAttribute('class', `${item.type}`);
+                
                 title.setAttribute('data-title', item.type)
                 title.appendChild(titleText);
                 doc.querySelector('[data-js="chose-game"]').appendChild(title);
+                const button = doc.querySelector(`[data-title="${item.type}"]`)
+                //css
+                button.style.border = `2px solid ${item.color}`;
+                button.style.width = `113px`;
+                button.style.height = `34px`;
+                button.style.borderRadius = `100px`;
+                button.style.marginTop = `20px`;
+                button.style.backgroundColor = `transparent`;
+                button.style.color = `${item.color}`;
+                button.style.fontWeight = `bold`;
+
             }); 
         }
 
@@ -77,6 +90,7 @@
             }  
         }
 
+        
         // escolhe o tipo de aposta
         const game = (type) => {
             bets= [];
@@ -134,6 +148,7 @@
             
         }
 
+        // remove o feedback
         const removeFeedBack =  () => {
             const pVoid = doc.querySelector(`[data-js="void"]`);
             if(pVoid){
@@ -142,9 +157,20 @@
             return;
         }
 
+        // add o feedback
+        const addFeedBack = () => {
+                const p = doc.createElement('p');
+                const text = doc.createTextNode('Vazio =(');
+                p.setAttribute('class', 'cart-title');
+                p.setAttribute('data-js', 'void');
+                p.appendChild(text);
+                const div = doc.querySelector('[data-js="cart-div"]');
+                return div.appendChild(p);   
+        }
+
         // cria o html dentro do carrinho
         const cartItem = (game, bet) => {
-            removeFeedBack()
+            removeFeedBack();
             const mainDiv = doc.createElement('div');
             mainDiv.setAttribute('class', 'games');
 
@@ -197,6 +223,9 @@
             doc.querySelector('[class="games"]').remove(item.parentElement);
             itemInCart.splice(item,1);
             doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${sum(itemInCart)}`;
+           if(itemInCart.length === 0){
+            addFeedBack();
+           }
         }
         
         // calcula o preço no carrinho 
@@ -209,9 +238,7 @@
             if(bets.length === 0){
                 return alert('Faça um Novo jogo para adicionar no carrinho');
             }
-
             clear();
-            
             gamesJson.map((i) => {
                 if(i.type === betType){
                     if(bets.length < i['max-number']){
@@ -221,7 +248,7 @@
                     return cartItem(i, bets);
                 }
             })
-            calculateTotalCart();
+            calculateTotalCart(); 
         }
 
         const userSelected = (value) => {
@@ -257,7 +284,8 @@
             if (ajax.readyState === 4) {
                 gamesJson = JSON.parse(ajax.response).types;
                 findButton(gamesJson);
-                game('Lotofácil')
+                game('Lotofácil');
+                addFeedBack();
             }
         }
 
