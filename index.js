@@ -68,17 +68,24 @@
             }); 
         }
 
+        const toggle = (bet) => {
+            const buttons =  doc.querySelector(`[class="${bet.type}"]`);
+            if(buttons){
+                buttons.removeAttribute('class');
+                buttons.classList.toggle(`${bet.type}-toggle`);
+                return
+            }
+            
+        }
+
         // escolhe o tipo de aposta
         const game = (type) => {
-            let button =  doc.querySelector(`[class="${type}-toggle"]`);
-            if(!button){
-                doc.querySelector(`[class="${type}"]`).setAttribute('class', `${type}-toggle`);
-            }
             gamesJson.map( (bet) => {
                 if (bet.type === type) {
+                    toggle(bet);
                     doc.querySelector('[data-js="desc"]').textContent = bet.description;
                     doc.querySelector('[data-js="name-bet"]').textContent = ` ${type}`;
-                    getRange(bet.range); 
+                    getRange(bet.range);
                 }
                 betType = type;
             });
@@ -87,9 +94,9 @@
         //clear game
         const clear = () => {   
             bets = [];
-            const inputs = doc.querySelector('input.selected');
+            const inputs = doc.querySelector(`input.selected-${betType}`);
 
-            if(!doc.querySelector('[class="selected"]')){
+            if(!doc.querySelector(`[class="selected-${betType}"]`)){
                 return alert('gere um jogo antes de limpar');
             }
 
@@ -97,7 +104,7 @@
                 inputs.removeAttribute('class');
             }
 
-            if(doc.querySelector('[class="selected"]')){
+            if(doc.querySelector(`[class="selected-${betType}"]`)){
                 return clear();
             } 
         }
@@ -110,7 +117,7 @@
 
             gamesJson.map((bet) => {
                 if(betType === bet.type){
-                    if(doc.querySelector('[class="selected"]')){
+                    if(doc.querySelector(`[class="selected-${bet.type}"]`)){
                         return alert('Limpe antes de gerar um novo jogo');
                     }
                     const arr = generateBet(bet.range, bet["max-number"]);
@@ -118,7 +125,7 @@
                     const inputs = doc.querySelectorAll('input');
                     
                     for(let i = 0 ; i < arr.length; i++ ){                          
-                        inputs[arr[i] - 1].setAttribute('class','selected');
+                        inputs[arr[i] - 1].setAttribute('class',`selected-${bet.type}`);
                     }
                     return;
                 }
@@ -179,7 +186,7 @@
             let sub = 0;
             arr.map(item => {
                 if(item){
-                    return (sub += item.price)
+                    return (sub = item.price)
                 }
                 return sub = 0;
             })
@@ -190,7 +197,7 @@
         const removeItemCart = (item) => {
             doc.querySelector('[class="games"]').remove(item.parentElement);
             console.log('sub ' + sub(itemInCart));
-            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${(sub(itemInCart) - sum(itemInCart))}`;
+            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${(sub(itemInCart) + sum(itemInCart))}`;
         }
         
         // calcula o preço no carrinho 
