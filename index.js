@@ -36,6 +36,7 @@
                 const input = doc.createElement('input');
                 input.setAttribute('value', i );
                 input.setAttribute('readonly', true);
+                input.setAttribute('data-input', i);
                 doc.querySelector('[data-js="numbers"]').appendChild(input);
             }
         }
@@ -52,8 +53,10 @@
                 arr.push(number);
             }
             const uniqNumber = new Set(arr);
-            bets = arr;
-            return arr = [...uniqNumber];
+            console.log(uniqNumber)
+            
+            arr =[...uniqNumber] ;
+            return bets = [...uniqNumber];
         }
 
         // procura os botoes
@@ -80,6 +83,7 @@
 
         // escolhe o tipo de aposta
         const game = (type) => {
+            bets= [];
             gamesJson.map( (bet) => {
                 if (bet.type === type) {
                     toggle(bet);
@@ -111,6 +115,7 @@
 
         // faz a aposta
         const completeGame = () => {
+            bets = [];
             if(betType === ''){
                 return alert('Escolha um jogo!');
             }
@@ -121,7 +126,7 @@
                         return alert('Limpe antes de gerar um novo jogo');
                     }
                     const arr = generateBet(bet.range, bet["max-number"]);
-                    
+                    console.log(arr);
                     const inputs = doc.querySelectorAll('input');
                     
                     for(let i = 0 ; i < arr.length; i++ ){                          
@@ -197,30 +202,64 @@
         const removeItemCart = (item) => {
             doc.querySelector('[class="games"]').remove(item.parentElement);
             console.log('sub ' + sub(itemInCart));
-            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${(sub(itemInCart) + sum(itemInCart))}`;
+            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${(sub(itemInCart) - sum(itemInCart))}`;
         }
         
         // calcula o preço no carrinho 
         const calculateTotalCart = () => {
             console.log('sum' + sum(itemInCart))
             doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${sum(itemInCart)}`;
+            console.log(itemInCart);
             
         }
-        
         
         // botao de add no cart
         const addToCart = (bets) => {
             if(bets.length === 0){
                 return alert('Faça um Novo jogo para adicionar no carrinho');
             }
+
+            
             
             gamesJson.map((i) => {
                 if(i.type === betType){
+                    if(bets.length < i['max-number']){
+                        return alert(`voce tem que selecionar ${i['max-number']} numeros`)
+                    }
                     itemInCart.push(i);
                     return cartItem(i, bets);
                 }
             })
              calculateTotalCart();
+        }
+
+        const userSelected = (value) => {
+            if(betType === ''){
+                return alert('Escolha um jogo!');
+            }
+
+            gamesJson.map((bet) => {
+                if(betType === bet.type){
+
+                    const input = doc.querySelector(`[data-input="${value}"]`);
+                    
+                    if(bets.length >= bet['max-number']){
+                        return alert(`voce so pode selecionar ${bet['max-number']} números, seus números sao  ${bets}`);
+                    }
+                    
+                    let number = input.value;
+                    const check = bets.some(item => {
+                        return item === number;
+                    });
+
+                    if(check){
+                        return alert('voce ja tem esse numero, por favor escolha outro')
+                    }
+                    bets.push(input.value); 
+                    input.setAttribute('class', `selected-${betType}`);    
+                    
+                }
+            });
         }
         
         // le o json
@@ -237,6 +276,9 @@
               const event = e.target; 
               if (event.dataset.title ) {
                 return game(event.dataset.title);
+              }
+              if (event.dataset.input) {
+                return userSelected(event.dataset.input);
               }
               if (event.dataset.complete === 'complete' ) {
                 return completeGame();
