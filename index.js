@@ -3,7 +3,7 @@
     function app() {
 
         // tipo da aposta
-        let betType = ''; 
+        let betType = '';
         // dados do json
         let gamesJson = [];
         // item no carrinho
@@ -12,7 +12,7 @@
         let bets = [];
 
         const ajax = new XMLHttpRequest();
-        
+
         const loadJson= (endpoint) => {
             ajax.open('GET', endpoint, true);
             ajax.send();
@@ -26,10 +26,11 @@
         }
 
         // pega o range de cada jogo
-        const getRange = (range) => { 
+        const getRange = (range) => {
             remove(doc.querySelector('[data-js="numbers"]'));
             for (let i = 1; i <= range; i++) {
                 const input = doc.createElement('input');
+
                 input.setAttribute('value', i );
                 input.setAttribute('readonly', true);
                 input.setAttribute('data-input', i);
@@ -37,33 +38,32 @@
             }
         }
 
-        // gera números aleatórios e únicos 
+        // gera números aleatórios e únicos
         const generateBet = (range, limit) => {
             let arr = [];
             for(let i = 1; i <= limit; i++){
-                const number = Math.ceil(Math.random() * range);
+                let number = Math.ceil(Math.random() * range);
                 const check = arr.some(item => {
                     return item === number;
                 });
                 if(check) i--;
+
                 arr.push(number);
             }
             const uniqNumber = new Set(arr);
-            
-            arr = [...uniqNumber];
+
+            console.log(arr = [...uniqNumber]);
             return bets = [...uniqNumber];
         }
-        
-    
+
+
 
         // procura os botoes
         const findButton = (data) => {
             data.filter((item, index) => {
                 const title = doc.createElement('button');
                 const titleText = doc.createTextNode(item.type);
-                
                 title.setAttribute('class', `${item.type}`);
-                
                 title.setAttribute('data-title', item.type)
                 title.appendChild(titleText);
                 doc.querySelector('[data-js="chose-game"]').appendChild(title);
@@ -77,8 +77,7 @@
                 button.style.backgroundColor = `transparent`;
                 button.style.color = `${item.color}`;
                 button.style.fontWeight = `bold`;
-
-            }); 
+            });
         }
 
         const toggle = (bet) => {
@@ -87,10 +86,10 @@
                 buttons.removeAttribute('class');
                 buttons.classList.toggle(`${bet.type}-toggle`);
                 return
-            }  
+            }
         }
 
-        
+
         // escolhe o tipo de aposta
         const game = (type) => {
             bets= [];
@@ -103,11 +102,11 @@
                     betType = type;
                 }
             });
-            
+
         }
 
         //clear game
-        const clear = () => {   
+        const clear = () => {
             bets = [];
             const inputs = doc.querySelector(`input.selected-${betType}`);
 
@@ -121,7 +120,7 @@
 
             if(doc.querySelector(`[class="selected-${betType}"]`)){
                 return clear();
-            } 
+            }
         }
 
         // faz a aposta
@@ -138,14 +137,14 @@
                     }
                     const arr = generateBet(bet.range, bet["max-number"]);
                     const inputs = doc.querySelectorAll('input');
-                    
-                    for(let i = 0 ; i < arr.length; i++ ){                          
+
+                    for(let i = 0 ; i < arr.length; i++ ){
                         inputs[arr[i] - 1].setAttribute('class',`selected-${bet.type}`);
                     }
                     return;
                 }
             });
-            
+
         }
 
         // remove o feedback
@@ -165,7 +164,7 @@
                 p.setAttribute('data-js', 'void');
                 p.appendChild(text);
                 const div = doc.querySelector('[data-js="cart-div"]');
-                return div.appendChild(p);   
+                return div.appendChild(p);
         }
 
         // cria o html dentro do carrinho
@@ -181,7 +180,14 @@
 
             const secondDiv = doc.createElement('div');
             secondDiv.setAttribute('class', `${game.type}-div`);
-            secondDiv.setAttribute('data-js', 'second')
+            secondDiv.setAttribute('data-js', 'second');
+            //css
+            secondDiv.style.display = 'flex';
+            secondDiv.style.flexDirection = 'column';
+            secondDiv.style.borderLeft = `4px solid ${game.color}`;
+            secondDiv.style.borderRadius = `5px`;
+            secondDiv.style.fontSize = `19px`;
+            secondDiv.style.color = `#868686`;
 
             const pNumbers = doc.createElement('p');
             const textNumbers = doc.createTextNode(`${bet}`);
@@ -189,12 +195,15 @@
 
             const pTypeGame = doc.createElement('p');
             pTypeGame.setAttribute('class', `game-name-${game.type}`);
+            pTypeGame.style.color = `${game.color}`
+            pTypeGame.style.fontWeight = `bold`
             const textTyeGame = doc.createTextNode(game.type);
             pTypeGame.appendChild(textTyeGame)
 
             const pPrice = doc.createElement('p');
             pPrice.setAttribute('class', 'price');
-            const textPrice = doc.createTextNode(` R$ ${game.price}`);
+
+            const textPrice = doc.createTextNode(` ${game.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`);
             pPrice.appendChild(textPrice)
 
             doc.querySelector('[data-js="cart-div"]').appendChild(mainDiv);
@@ -215,24 +224,24 @@
                 }
                 return sum = 0;
             })
-            return sum; 
+            return sum;
         }
 
         // remove os itens do carrinho
         const removeItemCart = (item) => {
             doc.querySelector('[class="games"]').remove(item.parentElement);
             itemInCart.splice(item,1);
-            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${sum(itemInCart)}`;
+            doc.querySelector('[class="final-text"]').textContent =  `TOTAL:  ${sum(itemInCart).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`;
            if(itemInCart.length === 0){
             addFeedBack();
            }
         }
-        
-        // calcula o preço no carrinho 
+
+        // calcula o preço no carrinho
         const calculateTotalCart = () => {
-            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: R$ ${sum(itemInCart)}`;
+            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: ${sum(itemInCart).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`;
         }
-        
+
         // botao de add no cart
         const addToCart = (bets) => {
             if(bets.length === 0){
@@ -248,7 +257,7 @@
                     return cartItem(i, bets);
                 }
             })
-            calculateTotalCart(); 
+            calculateTotalCart();
         }
 
         const userSelected = (value) => {
@@ -260,11 +269,11 @@
                 if(betType === bet.type){
 
                     const input = doc.querySelector(`[data-input="${value}"]`);
-                    
+
                     if(bets.length >= bet['max-number']){
                         return alert(`voce so pode selecionar ${bet['max-number']} números, seus números sao  ${bets}`);
                     }
-                    
+
                     let number = input.value;
                     const check = bets.some(item => {
                         return item === number;
@@ -273,12 +282,12 @@
                     if(check){
                         return alert('voce ja tem esse numero, por favor escolha outro')
                     }
-                    bets.push(input.value); 
-                    input.setAttribute('class', `selected-${betType}`);    
+                    bets.push(input.value);
+                    input.setAttribute('class', `selected-${betType}`);
                 }
             });
         }
-        
+
         // le o json
         ajax.onreadystatechange = () => {
             if (ajax.readyState === 4) {
@@ -292,7 +301,7 @@
         // add event
         doc.addEventListener(
             'click', (e) => {
-              const event = e.target; 
+              const event = e.target;
               if (event.dataset.title ) {
                 return game(event.dataset.title);
               }

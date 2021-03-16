@@ -191,9 +191,7 @@ header div a {
     font-weight: bold;
 }
 
-.numbers .selected {
-    background-color: #7e8c8f;
-}
+
 
 .numbers .selected-Lotofácil {
     background-color: #7F3992;
@@ -268,35 +266,6 @@ header div a {
     margin: 15px;
 }
 
-.games .Lotofácil-div {
-    display: flex;
-    flex-direction: column;
-    border-left: 4px solid #7F3992;
-    border-radius: 5px;
-    font-size: 19px;
-    color: #868686;
-}
-
-.games .Mega-Sena-div {
-    display: flex;
-    flex-direction: column;
-    border-left: 4px solid #01AC66;
-    border-radius: 5px;
-    font-size: 19px;
-    color: #868686;
-}
-
-.games .Quina-div {
-    display: flex;
-    flex-direction: column;
-    border-left: 4px solid #F79C31;
-    border-radius: 5px;
-    font-size: 19px;
-    color: #868686;
-}
-
-
-
 .games div p {
     width: 240px;
     word-wrap: break-word;
@@ -305,25 +274,7 @@ header div a {
 }
 
 
-.game-name-Mega-Sena {
-    color: #01AC66;
-    font-weight: bold;
-}
 
-.game-name-Lotofácil {
-    color: #7F3992;
-    font-weight: bold;
-}
-
-.game-name-Quina {
-    color: #F79C31;
-    font-weight: bold;
-}
-
-.price {
-    font-size: 16px;
-    font-weight: inherit;
-}
 
 .wrapper-total {
     display: flex;
