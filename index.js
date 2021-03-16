@@ -46,41 +46,45 @@
                   doc.querySelector('[data-js="numbers"]').appendChild(input);
                 }
             }
-            return range;
+          return range;
         }
 
-        // gera números aleatórios e únicos
+        // retorna um array de numeros unicos
+        const unique = (value, index, self) => {
+          return self.indexOf(value) === index;
+        }
+
+        // gera números aleatórios
         const generateBet = (range, limit) => {
             let arr = [];
-            let curNumb = 0;
-            for(let i = 1; i <= limit; i++){
-              let number = Math.ceil(Math.random() * range);
-              const check = arr.some(item => {
-                return item === number;
-              });
-              if(check)  i--;
-              curNumb = number;
-              arr.push(number);
-            }
-
-            const uniqNumber = new Set(arr);
-            arr = [...uniqNumber];
 
             // caso o user ja tenho escolhido numeros
             if(bets.length > 0){
-              const checkNumb = arr.some(item => {
-                return item === curNumb
-              });
-              if(checkNumb){
-                arr.splice(checkNumb,1);
+              for(let i = 1 ; i <= limit; i++){
+                let number = Math.ceil(Math.random() * (range - bets.length));
+
+                arr.push(number);
               }
-              console.log(arr);
-              console.log(bets);
-              const result = arr.length - bets.length;
-              return bets = bets.concat(arr.slice(0,result));
+              arr.filter(unique);
+              bets = bets.concat(arr);
+              console.log(bets)
+              bets = bets.filter(unique);
+              return bets;
             }
 
-            return bets = [...uniqNumber];
+            if(bets.length <= 0 ){
+              for(let i = 1; i <= limit; i++){
+                let number = Math.ceil(Math.random() * range);
+                const check = arr.some(item => {
+                  return item === number;
+                });
+                if(check)  i--;
+                arr.push(number);
+              }
+              arr = arr.filter(unique);
+              return bets = arr;
+            }
+
         }
 
         // procura os botoes
@@ -155,9 +159,7 @@
                 return alert('Escolha um jogo!');
             }
                 if(betType === gameSelected.type){
-                    // if(doc.querySelectorAll(`[class="selected-${gameSelected.type}"]`)){
-                    //     return alert('Limpe antes de gerar um novo jogo');
-                    // }
+
                     if(bets.length > 0 ){
                       const arr = generateBet(gameSelected.range, gameSelected["max-number"]);
                       const inputs = doc.querySelectorAll('input');
@@ -171,7 +173,7 @@
                     const arr = generateBet(gameSelected.range, gameSelected["max-number"]);
                     const inputs = doc.querySelectorAll('input');
 
-                    for(let i = 0 ; i < arr.length; i++ ){
+                    for(let i = 0 ; i < arr.length ; i++ ){
                       inputs[arr[i] - 1].setAttribute('class',`selected`);
                     }
                 }
@@ -306,9 +308,7 @@
                         return alert('voce ja tem esse numero, por favor escolha outro')
                     }
                     bets.push(Number(input.value));
-                    console.log(bets);
                     input.setAttribute('class', `selected`);
-
                 }
         }
 
