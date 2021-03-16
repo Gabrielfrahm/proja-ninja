@@ -49,48 +49,40 @@
       return range;
     }
 
-    // retorna um array de numeros unicos
-    const unique = (value, index, self) => {
-      return self.indexOf(value) === index;
-    }
-
     // gera números aleatórios
     const generateBet = (range, limit) => {
 
-      if(bets.length > 0){
+      if (bets.length > 0) {
         let arrLength = limit - bets.length;
-        for(let i = 1 ;  i < arrLength; i++){
+        for (let i = 1; i <= arrLength; i++) {
           let number = Math.ceil(Math.random() * range);
-          console.log(number);
+          let check = bets.some(item => {
+            return item === number;
+          })
+          if (check) {
+            i--;
+          } else {
+            bets.push(number);
+          }
         }
+        return bets;
       }
 
-      for(let i = 1; i <= limit ; i++ ){
+      for (let i = 1; i <= limit; i++) {
         let number = Math.ceil(Math.random() * range);
+        if(number < 10){
+          number = '0' + number;
+        }
         let check = bets.some(item => {
           return item === number;
-        })
-        if(check){
+        });
+        if (check) {
           i--;
-        }else{
+        } else {
           bets.push(number);
         }
       }
       return bets;
-      // console.log(bets.sort());
-      // if (bets.length <= 0) {
-      //   for (let i = 1; i <= limit; i++) {
-      //     let number = Math.ceil(Math.random() * range);
-      //     const check = arr.some(item => {
-      //       return item === number;
-      //     });
-      //     if (check) i--;
-      //     arr.push(number);
-      //   }
-      //   arr = arr.filter(unique);
-      //   return bets = arr;
-      // }
-
     }
 
     // procura os botoes
@@ -118,9 +110,18 @@
     const toggle = (bet) => {
       const buttons = doc.querySelector(`[class="${bet.type}"]`);
       if (buttons) {
-        buttons.removeAttribute('class');
-        buttons.classList.toggle(`${bet.type}-toggle`);
+        buttons.style.backgroundColor = `${bet.color}`;
+        buttons.style.color = `#fff`;
         return
+      }
+    }
+
+    const removeToggle = (bet) => {
+      const buttons = doc.querySelector(`[class="${bet.type}"]`);
+      if(buttons){
+        buttons.style.backgroundColor = `transparent`;
+        buttons.style.color = `${bets.color}`;
+        return;
       }
     }
 
@@ -129,7 +130,13 @@
       bets = [];
       gamesJson.filter((bet) => {
         if (bet.type === type) {
-          toggle(bet);
+
+          if(toggle){
+            removeToggle(bet);
+          }else{
+            toggle(bet);
+          }
+
           doc.querySelector('[data-js="desc"]').textContent = bet.description;
           doc.querySelector('[data-js="name-bet"]').textContent = ` ${type}`;
           range = getRange(bet.range);
@@ -283,7 +290,7 @@
         }
         itemInCart.push(gameSelected);
         calculateTotalCart();
-        return cartItem(gameSelected, bets);
+        return cartItem(gameSelected, bets.sort());
       }
     }
 
