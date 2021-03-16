@@ -52,7 +52,7 @@ header div a {
 }
 
 .container {
-    
+
 }
 
 .content {
@@ -100,8 +100,8 @@ header div a {
     height: 34px;
     border-radius: 100px;
     background-color: transparent;
-    color: #7F3992;  
-    font-weight: bold;  
+    color: #7F3992;
+    font-weight: bold;
 }
 
 .Lotofácil-toggle {
@@ -111,8 +111,8 @@ header div a {
     height: 34px;
     border-radius: 100px;
     background-color: #7F3992;
-    color: #fff;  
-    font-weight: bold;  
+    color: #fff;
+    font-weight: bold;
 }
 
 .chose-game .Mega-Sena {
@@ -122,8 +122,8 @@ header div a {
     height: 34px;
     border-radius: 100px;
     background: transparent;
-    color: #01Ac66;   
-    font-weight: bold;  
+    color: #01Ac66;
+    font-weight: bold;
 }
 
 .Mega-Sena-toggle {
@@ -133,8 +133,8 @@ header div a {
     height: 34px;
     border-radius: 100px;
     background: #01Ac66;
-    color: #fff;   
-    font-weight: bold;  
+    color: #fff;
+    font-weight: bold;
 }
 
 .chose-game .Quina {
@@ -144,7 +144,7 @@ header div a {
     height: 34px;
     border-radius: 100px;
     color: #F79C31;
-    font-weight: bold;  
+    font-weight: bold;
     background: transparent;
 
 }
@@ -157,7 +157,7 @@ header div a {
     background-color: #F79C31;
     border-radius: 100px;
     color: #fff;
-    font-weight: bold;     
+    font-weight: bold;
 } */
 
 .text {
@@ -192,8 +192,11 @@ header div a {
 }
 
 
+.numbers .selected {
+    background-color: #B5C401;
+}
 
-.numbers .selected-Lotofácil {
+/* .numbers .selected-Lotofácil {
     background-color: #7F3992;
 }
 
@@ -203,12 +206,12 @@ header div a {
 
 .numbers .selected-Quina {
     background-color: #F79C31;
-}
+} */
 
 .buttons {
     display: flex;
     margin-top: 30px;
-    
+
 }
 
 .button-game {
@@ -297,7 +300,7 @@ header div a {
     border-radius: 10px;
     color: #27C383;
     font-size: 32px;
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 footer {
@@ -310,4 +313,4 @@ footer {
     height: 50px;
     margin-top: 48px;
     width: 100%;
-} 
+}

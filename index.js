@@ -10,6 +10,8 @@
         let itemInCart = [];
         // numero das apostas
         let bets = [];
+        // objeto do jogo selecionado
+        let gameSelected = {};
 
         const ajax = new XMLHttpRequest();
 
@@ -30,33 +32,56 @@
             remove(doc.querySelector('[data-js="numbers"]'));
             for (let i = 1; i <= range; i++) {
                 const input = doc.createElement('input');
+                if( i < 10) {
+                  input.setAttribute('value', '0' + i );
 
-                input.setAttribute('value', i );
-                input.setAttribute('readonly', true);
-                input.setAttribute('data-input', i);
-                doc.querySelector('[data-js="numbers"]').appendChild(input);
+                  input.setAttribute('readonly', true);
+                  input.setAttribute('data-input', i);
+                  doc.querySelector('[data-js="numbers"]').appendChild(input);
+                }
+                if( i >= 10){
+                  input.setAttribute('value', i );
+                  input.setAttribute('readonly', true);
+                  input.setAttribute('data-input', i);
+                  doc.querySelector('[data-js="numbers"]').appendChild(input);
+                }
             }
+            return range;
         }
 
         // gera números aleatórios e únicos
         const generateBet = (range, limit) => {
             let arr = [];
+            let curNumb = 0;
             for(let i = 1; i <= limit; i++){
-                let number = Math.ceil(Math.random() * range);
-                const check = arr.some(item => {
-                    return item === number;
-                });
-                if(check) i--;
-
-                arr.push(number);
+              let number = Math.ceil(Math.random() * range);
+              const check = arr.some(item => {
+                return item === number;
+              });
+              if(check)  i--;
+              curNumb = number;
+              arr.push(number);
             }
-            const uniqNumber = new Set(arr);
 
-            console.log(arr = [...uniqNumber]);
+            const uniqNumber = new Set(arr);
+            arr = [...uniqNumber];
+
+            // caso o user ja tenho escolhido numeros
+            if(bets.length > 0){
+              const checkNumb = arr.some(item => {
+                return item === curNumb
+              });
+              if(checkNumb){
+                arr.splice(checkNumb,1);
+              }
+              console.log(arr);
+              console.log(bets);
+              const result = arr.length - bets.length;
+              return bets = bets.concat(arr.slice(0,result));
+            }
+
             return bets = [...uniqNumber];
         }
-
-
 
         // procura os botoes
         const findButton = (data) => {
@@ -89,7 +114,6 @@
             }
         }
 
-
         // escolhe o tipo de aposta
         const game = (type) => {
             bets= [];
@@ -98,19 +122,20 @@
                     toggle(bet);
                     doc.querySelector('[data-js="desc"]').textContent = bet.description;
                     doc.querySelector('[data-js="name-bet"]').textContent = ` ${type}`;
-                    getRange(bet.range);
+                    range = getRange(bet.range);
                     betType = type;
+                    gameSelected = bet;
+                    console.log(gameSelected)
                 }
             });
-
         }
 
         //clear game
         const clear = () => {
             bets = [];
-            const inputs = doc.querySelector(`input.selected-${betType}`);
+            const inputs = doc.querySelector(`input.selected`);
 
-            if(!doc.querySelector(`[class="selected-${betType}"]`)){
+            if(!doc.querySelector(`[class="selected"]`)){
                 return alert('gere um jogo antes de limpar');
             }
 
@@ -118,7 +143,7 @@
                 inputs.removeAttribute('class');
             }
 
-            if(doc.querySelector(`[class="selected-${betType}"]`)){
+            if(doc.querySelector(`[class="selected"]`)){
                 return clear();
             }
         }
@@ -129,22 +154,27 @@
             if(betType === ''){
                 return alert('Escolha um jogo!');
             }
+                if(betType === gameSelected.type){
+                    // if(doc.querySelectorAll(`[class="selected-${gameSelected.type}"]`)){
+                    //     return alert('Limpe antes de gerar um novo jogo');
+                    // }
+                    if(bets.length > 0 ){
+                      const arr = generateBet(gameSelected.range, gameSelected["max-number"]);
+                      const inputs = doc.querySelectorAll('input');
 
-            gamesJson.filter((bet) => {
-                if(betType === bet.type){
-                    if(doc.querySelector(`[class="selected-${bet.type}"]`)){
-                        return alert('Limpe antes de gerar um novo jogo');
+                      for(let i = 0 ; i < arr.length ; i++ ){
+                        inputs[arr[i] - 1].setAttribute('class',`selected`);
+                      }
+                      return;
                     }
-                    const arr = generateBet(bet.range, bet["max-number"]);
+
+                    const arr = generateBet(gameSelected.range, gameSelected["max-number"]);
                     const inputs = doc.querySelectorAll('input');
 
                     for(let i = 0 ; i < arr.length; i++ ){
-                        inputs[arr[i] - 1].setAttribute('class',`selected-${bet.type}`);
+                      inputs[arr[i] - 1].setAttribute('class',`selected`);
                     }
-                    return;
                 }
-            });
-
         }
 
         // remove o feedback
@@ -159,8 +189,9 @@
         // add o feedback
         const addFeedBack = () => {
                 const p = doc.createElement('p');
-                const text = doc.createTextNode('Vazio =(');
+                const text = doc.createTextNode('Seu carrinho esta vazio =(');
                 p.setAttribute('class', 'cart-title');
+                p.style.fontSize = '17px'
                 p.setAttribute('data-js', 'void');
                 p.appendChild(text);
                 const div = doc.querySelector('[data-js="cart-div"]');
@@ -220,7 +251,7 @@
             let sum = 0;
             arr.map(item => {
                 if(item){
-                    return sum += item.price
+                  return sum += item.price
                 }
                 return sum = 0;
             })
@@ -239,7 +270,7 @@
 
         // calcula o preço no carrinho
         const calculateTotalCart = () => {
-            doc.querySelector('[class="final-text"]').textContent =  `TOTAL: ${sum(itemInCart).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`;
+          return doc.querySelector('[class="final-text"]').textContent =  `TOTAL: ${sum(itemInCart).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`;
         }
 
         // botao de add no cart
@@ -248,44 +279,37 @@
                 return alert('Faça um Novo jogo para adicionar no carrinho');
             }
             clear();
-            gamesJson.map((i) => {
-                if(i.type === betType){
-                    if(bets.length < i['max-number']){
-                        return alert(`voce tem que selecionar ${i['max-number']} numeros`)
-                    }
-                    itemInCart.push(i);
-                    return cartItem(i, bets);
-                }
-            })
-            calculateTotalCart();
+            if(gameSelected.type === betType){
+              if(bets.length < gameSelected['max-number']){
+                  return alert(`voce tem que selecionar ${gameSelected['max-number']} numeros`)
+              }
+              itemInCart.push(gameSelected);
+              calculateTotalCart();
+              return cartItem(gameSelected, bets);
+            }
         }
 
         const userSelected = (value) => {
             if(betType === ''){
                 return alert('Escolha um jogo!');
             }
-
-            gamesJson.filter((bet) => {
-                if(betType === bet.type){
-
+                if(betType === gameSelected.type){
                     const input = doc.querySelector(`[data-input="${value}"]`);
-
-                    if(bets.length >= bet['max-number']){
-                        return alert(`voce so pode selecionar ${bet['max-number']} números, seus números sao  ${bets}`);
+                    if(bets.length >= gameSelected['max-number']){
+                        return alert(`voce so pode selecionar ${gameSelected['max-number']} números, seus números sao  ${bets}`);
                     }
-
-                    let number = input.value;
+                    let number = Number(input.value);
                     const check = bets.some(item => {
                         return item === number;
                     });
-
                     if(check){
                         return alert('voce ja tem esse numero, por favor escolha outro')
                     }
-                    bets.push(input.value);
-                    input.setAttribute('class', `selected-${betType}`);
+                    bets.push(Number(input.value));
+                    console.log(bets);
+                    input.setAttribute('class', `selected`);
+
                 }
-            });
         }
 
         // le o json
@@ -295,6 +319,7 @@
                 findButton(gamesJson);
                 game('Lotofácil');
                 addFeedBack();
+
             }
         }
 
