@@ -162,7 +162,7 @@
       const buttons = doc.querySelector(`[class="${bet.type}"]`);
       if(buttons){
         buttons.style.backgroundColor = `transparent`;
-        buttons.style.color = `${bets.color}`;
+        buttons.style.color = `${bet.color}`;
         return;
       }
     }
@@ -171,11 +171,18 @@
     const game = (type) => {
       bets = [];
       let oldType = [];
-      let button = doc.querySelector(`[data-title="${type}"]`);
+
       gamesJson.filter((bet) => {
+        oldType.push(bet.type);
+        removeToggle(bet);
+
         if (bet.type === type) {
-            oldType.push(type);
-            console.log(oldType);
+          console.log(oldType);
+          if(type === oldType[oldType.length - 1]){
+            toggle(bet);
+          }
+
+
           doc.querySelector('[data-js="desc"]').textContent = bet.description;
           doc.querySelector('[data-js="name-bet"]').textContent = ` ${type.toUpperCase()}`;
           range = getRange(bet.range);
@@ -193,7 +200,7 @@
       const inputs = doc.querySelector(`input.selected`);
 
       if (!doc.querySelector(`[class="selected"]`)) {
-        return createModal('gere um jogo antes de limpar');
+        return createModal('Gere um jogo antes de limpar');
       }
 
       for (let i = 0; i <= bets.length; i++) {
@@ -321,15 +328,16 @@
     // botao de add no cart
     const addToCart = (bets) => {
       if (bets.length === 0) {
-        return createModal('Faça um Novo jogo para adicionar no carrinho');
+        return createModal('Faça um novo jogo para adicionar no carrinho');
       }
       clear();
       if (gameSelected.type === betType) {
         if (bets.length < gameSelected['max-number']) {
-          return createModal(`voce tem que selecionar ${gameSelected['max-number']} numeros`)
+          return createModal(`Voce tem que selecionar ${gameSelected['max-number']} números`)
         }
         itemInCart.push(gameSelected);
         calculateTotalCart();
+        // createModal('Adicionado ao carinho');
         return cartItem(gameSelected, bets.sort());
       }
     }
@@ -341,14 +349,14 @@
       if (betType === gameSelected.type) {
         const input = doc.querySelector(`[data-input="${value}"]`);
         if (bets.length >= gameSelected['max-number']) {
-          return createModal(`voce so pode selecionar ${gameSelected['max-number']} números, seus números sao  ${bets}`);
+          return createModal(`Voce so pode selecionar ${gameSelected['max-number']} números, seus números sao  ${bets}`);
         }
         let number = Number(input.value);
         const check = bets.some(item => {
           return item === number;
         });
         if (check) {
-          return createModal('voce ja tem esse numero, por favor escolha outro')
+          return createModal('Voce ja tem esse numero, por favor escolha outro')
         }
         bets.push(Number(input.value));
         // console.log(bets);

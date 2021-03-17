@@ -266,14 +266,15 @@ footer {
   justify-content: center;
   align-items: center;
   min-width: 480px;
+  color: #fff;
   max-height: 200px;
   position: relative;
-  background: rgba(13, 1, 1, 0.158);
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 8.0px );
--webkit-backdrop-filter: blur( 8.0px );
-border-radius: 10px;
-border: 1px solid rgba(255, 255, 255, 0.603);
+  background: rgba(255, 23, 23, 0.459);
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 8.0px );
+  -webkit-backdrop-filter: blur( 8.0px );
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.096);
   padding: 2rem;
   font-size: 30px;
 }
@@ -286,4 +287,5 @@ border: 1px solid rgba(255, 255, 255, 0.603);
   right: 0;
   padding: 0 0.5rem;
   display: inline-block;
+  color:#fff;
 }
