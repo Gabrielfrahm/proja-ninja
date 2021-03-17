@@ -112,7 +112,7 @@
 
       for (let i = 1; i <= limit; i++) {
         let number = Math.ceil(Math.random() * range);
-        if(number < 10){
+        if (number < 10) {
           number = '0' + number;
         }
         let check = bets.some(item => {
@@ -160,7 +160,7 @@
 
     const removeToggle = (bet) => {
       const buttons = doc.querySelector(`[class="${bet.type}"]`);
-      if(buttons){
+      if (buttons) {
         buttons.style.backgroundColor = `transparent`;
         buttons.style.color = `${bet.color}`;
         return;
@@ -178,10 +178,9 @@
 
         if (bet.type === type) {
           console.log(oldType);
-          if(type === oldType[oldType.length - 1]){
+          if (type === oldType[oldType.length - 1]) {
             toggle(bet);
           }
-
 
           doc.querySelector('[data-js="desc"]').textContent = bet.description;
           doc.querySelector('[data-js="name-bet"]').textContent = ` ${type.toUpperCase()}`;
@@ -218,6 +217,7 @@
       if (betType === '') {
         return createModal('Escolha um jogo!');
       }
+
       if (betType === gameSelected.type) {
 
         const arr = generateBet(gameSelected.range, gameSelected["max-number"]);
