@@ -93,72 +93,7 @@ header div a {
     margin-right: 20px;
 }
 
-/* .chose-game .Lotofácil {
-    margin-top: 20px;
-    border: 2px solid #7F3992;
-    width: 113px;
-    height: 34px;
-    border-radius: 100px;
-    background-color: transparent;
-    color: #7F3992;
-    font-weight: bold;
-}
 
-.Lotofácil-toggle {
-    margin-top: 20px;
-    border: 2px solid #7F3992;
-    width: 113px;
-    height: 34px;
-    border-radius: 100px;
-    background-color: #7F3992;
-    color: #fff;
-    font-weight: bold;
-}
-
-.chose-game .Mega-Sena {
-    margin-top: 20px;
-    border: 2px solid #01AC66;
-    width: 113px;
-    height: 34px;
-    border-radius: 100px;
-    background: transparent;
-    color: #01Ac66;
-    font-weight: bold;
-}
-
-.Mega-Sena-toggle {
-    margin-top: 20px;
-    border: 2px solid #01AC66;
-    width: 113px;
-    height: 34px;
-    border-radius: 100px;
-    background: #01Ac66;
-    color: #fff;
-    font-weight: bold;
-}
-
-.chose-game .Quina {
-    margin-top: 20px;
-    border: 2px solid #F79C31;
-    width: 113px;
-    height: 34px;
-    border-radius: 100px;
-    color: #F79C31;
-    font-weight: bold;
-    background: transparent;
-
-}
-
-.Quina-toggle {
-    margin-top: 20px;
-    border: 2px solid #F79C31;
-    width: 113px;
-    height: 34px;
-    background-color: #F79C31;
-    border-radius: 100px;
-    color: #fff;
-    font-weight: bold;
-} */
 
 .text {
     max-width: 648px;
@@ -196,17 +131,6 @@ header div a {
     background-color: #B5C401;
 }
 
-/* .numbers .selected-Lotofácil {
-    background-color: #7F3992;
-}
-
-.numbers .selected-Mega-Sena {
-    background-color: #27C383;
-}
-
-.numbers .selected-Quina {
-    background-color: #F79C31;
-} */
 
 .buttons {
     display: flex;
@@ -313,4 +237,53 @@ footer {
     height: 50px;
     margin-top: 48px;
     width: 100%;
+}
+
+
+.modal {
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  text-align: left;
+  backdrop-filter: blur(2px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  padding: 2rem;
+}
+
+.modal:target {
+  justify-content: space-around;
+  align-items: center;
+}
+
+.modal__content {
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 480px;
+  max-height: 200px;
+  position: relative;
+  background: rgba(13, 1, 1, 0.158);
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 8.0px );
+-webkit-backdrop-filter: blur( 8.0px );
+border-radius: 10px;
+border: 1px solid rgba(255, 255, 255, 0.603);
+  padding: 2rem;
+  font-size: 30px;
+}
+
+.modal__close {
+  color: initial;
+  text-decoration: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 0.5rem;
+  display: inline-block;
 }

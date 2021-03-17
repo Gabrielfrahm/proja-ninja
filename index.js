@@ -27,6 +27,48 @@
       }
     }
 
+
+
+
+    // create modal
+    const createModal = (text) => {
+      const div = doc.createElement('div');
+      div.setAttribute('class', 'modal')
+
+      const a = doc.createElement('a');
+      a.setAttribute('href', '#');
+      a.setAttribute('class', 'modal__overlay');
+      a.setAttribute('aria-label', 'Fechar');
+
+      const secondDiv = doc.createElement('div');
+      secondDiv.setAttribute('class', 'modal__content');
+
+      const secondA = doc.createElement('a');
+      const textSecondA = doc.createTextNode('x');
+      secondA.setAttribute('href', '#');
+      secondA.setAttribute('class', 'modal__close');
+      secondA.setAttribute('aria-label', 'Fechar');
+      secondA.setAttribute('data-js', 'closedModal');
+      secondA.appendChild(textSecondA);
+
+
+      const thirdDiv = doc.createElement('div');
+      const textThirdDiv = doc.createTextNode(`${text}`);
+      thirdDiv.appendChild(textThirdDiv);
+
+      doc.querySelector('[data-modal="modal"]').appendChild(div);
+
+      div.appendChild(a);
+      div.appendChild(secondDiv);
+      secondDiv.appendChild(secondA);
+      secondDiv.appendChild(thirdDiv);
+
+    }
+
+    const closedModal = () => {
+      remove(doc.querySelector(`[data-modal="modal"]`));
+    }
+
     // pega o range de cada jogo
     const getRange = (range) => {
       remove(doc.querySelector('[data-js="numbers"]'));
@@ -52,8 +94,8 @@
     // gera números aleatórios
     const generateBet = (range, limit) => {
 
+      let arrLength = limit - bets.length;
       if (bets.length > 0) {
-        let arrLength = limit - bets.length;
         for (let i = 1; i <= arrLength; i++) {
           let number = Math.ceil(Math.random() * range);
           let check = bets.some(item => {
@@ -94,7 +136,7 @@
         title.setAttribute('data-title', item.type)
         title.appendChild(titleText);
         doc.querySelector('[data-js="chose-game"]').appendChild(title);
-        const button = doc.querySelector(`[data-title="${item.type}"]`)
+        const button = doc.querySelector(`[data-title="${item.type}"]`);
         //css
         button.style.border = `2px solid ${item.color}`;
         button.style.width = `113px`;
@@ -128,21 +170,19 @@
     // escolhe o tipo de aposta
     const game = (type) => {
       bets = [];
+      let oldType = [];
+      let button = doc.querySelector(`[data-title="${type}"]`);
       gamesJson.filter((bet) => {
         if (bet.type === type) {
-
-          if(toggle){
-            removeToggle(bet);
-          }else{
-            toggle(bet);
-          }
-
+            oldType.push(type);
+            console.log(oldType);
           doc.querySelector('[data-js="desc"]').textContent = bet.description;
-          doc.querySelector('[data-js="name-bet"]').textContent = ` ${type}`;
+          doc.querySelector('[data-js="name-bet"]').textContent = ` ${type.toUpperCase()}`;
           range = getRange(bet.range);
           betType = type;
           gameSelected = bet;
-          console.log(gameSelected)
+
+          return;
         }
       });
     }
@@ -153,7 +193,7 @@
       const inputs = doc.querySelector(`input.selected`);
 
       if (!doc.querySelector(`[class="selected"]`)) {
-        return alert('gere um jogo antes de limpar');
+        return createModal('gere um jogo antes de limpar');
       }
 
       for (let i = 0; i <= bets.length; i++) {
@@ -169,7 +209,7 @@
     const completeGame = () => {
       // bets = [];
       if (betType === '') {
-        return alert('Escolha um jogo!');
+        return createModal('Escolha um jogo!');
       }
       if (betType === gameSelected.type) {
 
@@ -281,12 +321,12 @@
     // botao de add no cart
     const addToCart = (bets) => {
       if (bets.length === 0) {
-        return alert('Faça um Novo jogo para adicionar no carrinho');
+        return createModal('Faça um Novo jogo para adicionar no carrinho');
       }
       clear();
       if (gameSelected.type === betType) {
         if (bets.length < gameSelected['max-number']) {
-          return alert(`voce tem que selecionar ${gameSelected['max-number']} numeros`)
+          return createModal(`voce tem que selecionar ${gameSelected['max-number']} numeros`)
         }
         itemInCart.push(gameSelected);
         calculateTotalCart();
@@ -296,19 +336,19 @@
 
     const userSelected = (value) => {
       if (betType === '') {
-        return alert('Escolha um jogo!');
+        return createModal('Escolha um jogo!');
       }
       if (betType === gameSelected.type) {
         const input = doc.querySelector(`[data-input="${value}"]`);
         if (bets.length >= gameSelected['max-number']) {
-          return alert(`voce so pode selecionar ${gameSelected['max-number']} números, seus números sao  ${bets}`);
+          return createModal(`voce so pode selecionar ${gameSelected['max-number']} números, seus números sao  ${bets}`);
         }
         let number = Number(input.value);
         const check = bets.some(item => {
           return item === number;
         });
         if (check) {
-          return alert('voce ja tem esse numero, por favor escolha outro')
+          return createModal('voce ja tem esse numero, por favor escolha outro')
         }
         bets.push(Number(input.value));
         // console.log(bets);
@@ -348,6 +388,9 @@
         }
         if (event.dataset.delete === 'delete') {
           return removeItemCart(event.dataset.delete);
+        }
+        if (event.dataset.js === 'closedModal') {
+          return closedModal();
         }
       },
       false
